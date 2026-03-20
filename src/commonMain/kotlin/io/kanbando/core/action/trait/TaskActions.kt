@@ -17,6 +17,33 @@ import io.kanbando.core.util.UuidGenerator
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
+data class CreateTask(
+    val parentId: NodeId?,
+    val title: String,
+    val position: String,
+    val actingUserId: UserId,
+    val clientId: ClientId,
+) : Action {
+    override suspend fun execute(nodes: NodeRepository, events: EventLog): ActionResult {
+        val now = Clock.System.now()
+        val node = io.kanbando.core.model.Node(
+            id = UuidGenerator.generate(),
+            title = title,
+            parentId = parentId,
+            position = position,
+            createdAt = now,
+            modifiedAt = now,
+            clientId = clientId,
+            version = 1L,
+            traits = setOf(TaskTrait()),
+        )
+        nodes.save(node)
+        val event = event(EventType.NODE_CREATED, node.id, actingUserId, clientId, now)
+        events.append(event)
+        return Success(event)
+    }
+}
+
 data class CompleteTask(
     val nodeId: NodeId,
     val actingUserId: UserId,
