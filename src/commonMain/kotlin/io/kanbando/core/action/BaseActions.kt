@@ -16,7 +16,6 @@ import kotlinx.datetime.Clock
 data class CreateChild(
     val parentId: NodeId?,
     val title: String,
-    val position: String,
     val actingUserId: UserId,
     val clientId: ClientId,
 ) : Action {
@@ -26,7 +25,6 @@ data class CreateChild(
             id = UuidGenerator.generate(),
             title = title,
             parentId = parentId,
-            position = position,
             createdAt = now,
             modifiedAt = now,
             clientId = clientId,
@@ -76,7 +74,6 @@ data class RenameNode(
 data class MoveNode(
     val nodeId: NodeId,
     val newParentId: NodeId?,
-    val newPosition: String,
     val actingUserId: UserId,
     val clientId: ClientId,
 ) : Action {
@@ -86,7 +83,7 @@ data class MoveNode(
             cause = IllegalArgumentException("Node not found: $nodeId"),
         )
         val now = Clock.System.now()
-        nodes.save(node.copy(parentId = newParentId, position = newPosition, modifiedAt = now, version = node.version + 1, clientId = clientId))
+        nodes.save(node.copy(parentId = newParentId, modifiedAt = now, version = node.version + 1, clientId = clientId))
         val event = Event(
             id = UuidGenerator.generate(),
             type = EventType.NODE_MOVED,

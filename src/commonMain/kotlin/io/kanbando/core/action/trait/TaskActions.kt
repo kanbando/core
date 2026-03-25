@@ -20,7 +20,7 @@ import kotlinx.datetime.Instant
 data class CreateTask(
     val parentId: NodeId?,
     val title: String,
-    val position: String,
+    val description: String? = null,
     val actingUserId: UserId,
     val clientId: ClientId,
 ) : Action {
@@ -29,8 +29,8 @@ data class CreateTask(
         val node = io.kanbando.core.model.Node(
             id = UuidGenerator.generate(),
             title = title,
+            description = description,
             parentId = parentId,
-            position = position,
             createdAt = now,
             modifiedAt = now,
             clientId = clientId,

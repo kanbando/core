@@ -33,9 +33,10 @@ object NodeSerializer : KSerializer<Node> {
     private val ownershipSerializer = OwnershipSerializer
 
     private val KNOWN_KEYS = setOf(
-        "id", "title", "description", "parentId", "position",
+        "id", "title", "description", "parentId",
         "createdAt", "modifiedAt", "clientId", "version",
         "ownership", "traits",
+        "position", // legacy — still recognised so old JSON round-trips cleanly
     )
 
     override fun deserialize(decoder: Decoder): Node {
@@ -47,7 +48,6 @@ object NodeSerializer : KSerializer<Node> {
             title = json["title"]!!.jsonPrimitive.content,
             description = json["description"]?.jsonPrimitive?.content,
             parentId = json["parentId"]?.jsonPrimitive?.content,
-            position = json["position"]?.jsonPrimitive?.content ?: "",
             createdAt = Instant.parse(json["createdAt"]!!.jsonPrimitive.content),
             modifiedAt = Instant.parse(json["modifiedAt"]!!.jsonPrimitive.content),
             clientId = json["clientId"]!!.jsonPrimitive.content,
@@ -69,7 +69,6 @@ object NodeSerializer : KSerializer<Node> {
             put("title", value.title)
             value.description?.let { put("description", it) }
             value.parentId?.let { put("parentId", it) }
-            put("position", value.position)
             put("createdAt", value.createdAt.toString())
             put("modifiedAt", value.modifiedAt.toString())
             put("clientId", value.clientId)

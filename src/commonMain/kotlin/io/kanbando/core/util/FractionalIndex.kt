@@ -38,18 +38,30 @@ object FractionalIndex {
         "${position}:${clientId}"
 
     private fun midpoint(lower: String, upper: String): String {
-        val maxLen = maxOf(lower.length, upper.length)
-        val a = lower.padEnd(maxLen, '0')
-        val b = upper.padEnd(maxLen, '0')
+        val n = CHARS.size
         val result = StringBuilder()
-        var carry = 0
-        for (i in maxLen - 1 downTo 0) {
-            val ai = CHARS.indexOf(a[i]).coerceAtLeast(0)
-            val bi = CHARS.indexOf(b[i]).coerceAtLeast(0)
-            val sum = ai + bi + carry * CHARS.size
-            result.insert(0, CHARS[sum / 2 % CHARS.size])
-            carry = sum / 2 / CHARS.size
+        val maxLen = maxOf(lower.length, upper.length) + 1
+        var inGap = false // true once we've consumed a position where hi == lo + 1
+
+        for (i in 0 until maxLen) {
+            val lo = if (i < lower.length) CHARS.indexOf(lower[i]).coerceAtLeast(0) else 0
+            val hi = if (inGap || i >= upper.length) n else CHARS.indexOf(upper[i]).coerceAtLeast(0)
+
+            when {
+                hi - lo > 1 -> {
+                    result.append(CHARS[(lo + hi) / 2])
+                    return result.toString()
+                }
+                hi == lo + 1 -> {
+                    // Can't split here; take lo's digit and recurse into the gap
+                    result.append(CHARS[lo])
+                    inGap = true
+                }
+                else -> { // lo == hi: common prefix digit, keep going
+                    result.append(CHARS[lo])
+                }
+            }
         }
-        return result.toString().trimEnd('0').ifEmpty { "0" }
+        return result.toString()
     }
 }

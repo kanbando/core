@@ -15,18 +15,17 @@ import io.kanbando.core.util.UuidGenerator
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
-/** Move a card (node) from one column to another, or reorder within the same column. */
+/** Move a card (node) from one column to another, appending it at the end. */
 data class MoveCard(
     val cardId: NodeId,
     val targetColumnId: NodeId,
-    val newPosition: String,
     val actingUserId: UserId,
     val clientId: ClientId,
 ) : Action {
     override suspend fun execute(nodes: NodeRepository, events: EventLog): ActionResult {
         val card = nodes.get(cardId) ?: return notFound(cardId, actingUserId, clientId)
         val now = Clock.System.now()
-        nodes.save(card.copy(parentId = targetColumnId, position = newPosition, modifiedAt = now, version = card.version + 1, clientId = clientId))
+        nodes.save(card.copy(parentId = targetColumnId, modifiedAt = now, version = card.version + 1, clientId = clientId))
         val event = event(EventType.CARD_MOVED, cardId, actingUserId, clientId, now,
             metadata = mapOf("targetColumn" to targetColumnId))
         events.append(event)
@@ -38,7 +37,6 @@ data class MoveCard(
 data class AddColumn(
     val boardId: NodeId,
     val title: String,
-    val position: String,
     val actingUserId: UserId,
     val clientId: ClientId,
 ) : Action {
@@ -48,7 +46,6 @@ data class AddColumn(
             id = UuidGenerator.generate(),
             title = title,
             parentId = boardId,
-            position = position,
             createdAt = now,
             modifiedAt = now,
             clientId = clientId,
@@ -71,9 +68,7 @@ data class ArchiveColumn(
     override suspend fun execute(nodes: NodeRepository, events: EventLog): ActionResult {
         val column = nodes.get(columnId) ?: return notFound(columnId, actingUserId, clientId)
         val now = Clock.System.now()
-        // Archive by moving to a special "archived" position prefix and recording in metadata
         nodes.save(column.copy(
-            position = "archived:${column.position}",
             modifiedAt = now,
             version = column.version + 1,
             clientId = clientId,

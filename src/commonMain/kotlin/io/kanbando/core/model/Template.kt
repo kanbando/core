@@ -39,6 +39,7 @@ data class Template(
     val capabilityUid: String get() = TemplateHash.capability(this)
 }
 
+@kotlinx.serialization.Serializable
 enum class SortMode { NATURAL, DEFAULT, USER }
 
 /** Built-in templates shipped with core. Their UIDs are stable and well-known. */

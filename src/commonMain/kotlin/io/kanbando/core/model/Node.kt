@@ -6,6 +6,12 @@ import kotlinx.serialization.json.JsonObject
 /** Globally unique node identifier (UUID string). */
 typealias NodeId = String
 
+/**
+ * The single hidden root node that is the sole parent of all [BandoTrait] nodes.
+ * Never shown in any UI. Created automatically on first launch.
+ */
+const val ROOT_NODE_ID: NodeId = "__root__"
+
 /** Client identity — Ed25519 public key, base64url encoded. */
 typealias ClientId = String
 
@@ -24,8 +30,6 @@ data class Node(
     val title: String,
     val description: String? = null,
     val parentId: NodeId? = null,
-    /** Fractional index string — determines ordering within parent. */
-    val position: String,
     val createdAt: Instant,
     val modifiedAt: Instant,
     /** Public key of the client that last modified this node. */

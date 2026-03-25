@@ -48,6 +48,48 @@ data class BoardTrait(
 }
 
 /**
+ * The node is the root of a bando — a named, self-contained app-within-an-app.
+ *
+ * Constraints (enforced at the action layer):
+ * - Must be a direct child of the Root node ([ROOT_NODE_ID]).
+ * - Cannot appear in the ancestry or descendants of another [BandoTrait] node.
+ */
+data class BandoTrait(
+    val icon: String? = null,
+    val templateId: String? = null,
+    val color: String? = null,
+    val description: String? = null,
+    val iconAsBackground: Boolean = false,
+    val unknownFields: JsonObject = JsonObject(emptyMap()),
+) : Trait {
+    override val traitType: String get() = TYPE
+    companion object {
+        const val TYPE = "bando"
+        val KNOWN_KEYS = setOf("type", "icon", "templateId", "color", "description", "iconAsBackground")
+    }
+}
+
+/**
+ * The node acts as a flat list — its direct children are tasks shown in list order.
+ *
+ * Applied alongside [BandoTrait] on a Simple List bando, or standalone on a list
+ * nested inside a more complex bando structure.
+ */
+data class ListTrait(
+    val sortOrder: ListSortOrder = ListSortOrder.MANUAL,
+    val showCompleted: Boolean = true,
+    val unknownFields: JsonObject = JsonObject(emptyMap()),
+) : Trait {
+    override val traitType: String get() = TYPE
+    companion object {
+        const val TYPE = "list"
+        val KNOWN_KEYS = setOf("type", "sortOrder", "showCompleted")
+    }
+}
+
+enum class ListSortOrder { MANUAL, ALPHABETICAL, DUE_DATE, PRIORITY, CREATED_AT }
+
+/**
  * The node acts as a workspace — manages membership and access for its subtree.
  */
 data class WorkspaceTrait(

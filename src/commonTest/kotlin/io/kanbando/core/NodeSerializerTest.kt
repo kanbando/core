@@ -19,7 +19,6 @@ class NodeSerializerTest {
         id = "test-id-1",
         title = "My Task",
         parentId = null,
-        position = "m",
         createdAt = Instant.parse("2026-01-01T00:00:00Z"),
         modifiedAt = Instant.parse("2026-01-02T00:00:00Z"),
         clientId = "client-key-abc",
