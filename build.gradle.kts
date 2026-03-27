@@ -1,25 +1,16 @@
 plugins {
-    id("kanbando.kmp-library")
+    id("kanbando.jvm-library")
     id("kanbando.publish")
 }
 
 group = "io.kanbando"
 version = "0.1.0-SNAPSHOT"
 
-android {
-    namespace = "io.kanbando.core"
-}
+dependencies {
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.datetime)
 
-kotlin {
-    sourceSets {
-        commonMain.dependencies {
-            implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.serialization.json)
-            implementation(libs.kotlinx.datetime)
-        }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
-            implementation(libs.kotlinx.coroutines.test)
-        }
-    }
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlinx.coroutines.test)
 }
