@@ -1,7 +1,7 @@
 package io.kanbando.core.event
 
 import io.kanbando.core.model.NodeId
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * Append-only log of [Event]s. Captured on-device always; optionally synced to server.

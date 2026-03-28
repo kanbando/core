@@ -17,7 +17,7 @@ import io.kanbando.core.model.ROOT_NODE_ID
 import io.kanbando.core.model.identity.UserId
 import io.kanbando.core.repository.NodeRepository
 import io.kanbando.core.util.UuidGenerator
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 /**
  * Creates a new bando as a direct child of the Root node.

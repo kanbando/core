@@ -2,7 +2,7 @@ package io.kanbando.core.repository
 
 import io.kanbando.core.model.Node
 import io.kanbando.core.model.NodeId
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * Port (interface) for node storage. Platform packages provide the adapter (implementation).

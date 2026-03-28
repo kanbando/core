@@ -3,7 +3,7 @@ package io.kanbando.core.repository
 import io.kanbando.core.event.Event
 import io.kanbando.core.event.EventLog
 import io.kanbando.core.model.NodeId
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * Storage-backed implementation of [EventLog]. Platform packages provide the adapter.

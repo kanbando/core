@@ -11,7 +11,7 @@ import io.kanbando.core.model.PrincipalRef
 import io.kanbando.core.model.identity.UserId
 import io.kanbando.core.repository.NodeRepository
 import io.kanbando.core.util.UuidGenerator
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 data class CreateChild(
     val parentId: NodeId?,

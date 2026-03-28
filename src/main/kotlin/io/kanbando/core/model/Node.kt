@@ -1,6 +1,6 @@
 package io.kanbando.core.model
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.json.JsonObject
 
 /** Globally unique node identifier (UUID string). */

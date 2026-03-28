@@ -3,7 +3,7 @@ package io.kanbando.core.event
 import io.kanbando.core.model.ClientId
 import io.kanbando.core.model.NodeId
 import io.kanbando.core.model.identity.UserId
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * An immutable record of something that happened.

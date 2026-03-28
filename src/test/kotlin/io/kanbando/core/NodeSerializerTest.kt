@@ -3,7 +3,7 @@ package io.kanbando.core
 import io.kanbando.core.model.Node
 import io.kanbando.core.model.TaskTrait
 import io.kanbando.core.serialization.NodeSerializer
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive

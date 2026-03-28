@@ -10,7 +10,7 @@ import io.kanbando.core.model.TaskTrait
 import io.kanbando.core.model.Trait
 import io.kanbando.core.model.UnknownTrait
 import io.kanbando.core.model.WorkspaceTrait
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor

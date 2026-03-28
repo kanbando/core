@@ -14,8 +14,8 @@ import io.kanbando.core.model.TaskTrait
 import io.kanbando.core.model.identity.UserId
 import io.kanbando.core.repository.NodeRepository
 import io.kanbando.core.util.UuidGenerator
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 data class CreateTask(
     val parentId: NodeId?,

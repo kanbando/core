@@ -1,7 +1,7 @@
 package io.kanbando.core.sync
 
 import io.kanbando.core.model.Node
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 /**
  * Port for sync operations between a client and a server.

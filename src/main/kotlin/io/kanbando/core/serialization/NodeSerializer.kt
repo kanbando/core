@@ -3,7 +3,7 @@ package io.kanbando.core.serialization
 import io.kanbando.core.model.Node
 import io.kanbando.core.model.Ownership
 import io.kanbando.core.model.Trait
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.SetSerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
